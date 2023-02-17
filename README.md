@@ -2,9 +2,9 @@
 
 ## requirements
 
-#### pytest
-#### httpx
+    pytest
+    httpx
 
 ## for run tests
 
-#### python -m pytest
+    python -m pytest
