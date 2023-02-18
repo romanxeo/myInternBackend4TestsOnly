@@ -1,10 +1,12 @@
+from httpx import AsyncClient
 
-def test_health_check(test_app):
+
+async def test_health_check(ac: AsyncClient):
     data = {
         "status_code": 200,
         "detail": "ok",
         "result": "working"
     }
-    response = test_app.get("/")
+    response = await ac.get("/")
     assert response.status_code == 200
     assert response.json() == data
