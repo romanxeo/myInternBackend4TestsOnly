@@ -234,7 +234,7 @@ async def test_delete_user_one_good(ac: AsyncClient):
     assert response.status_code == 200
 
 
-async def test_login_user_one(ac: AsyncClient):
+async def test_login_user_one_(ac: AsyncClient):
     payload = {
         "user_email": "test1@test.com",
         "user_password": "testt",
