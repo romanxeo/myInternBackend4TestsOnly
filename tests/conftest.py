@@ -6,6 +6,7 @@ from starlette.testclient import TestClient
 from databases import Database
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.pool import NullPool
+
 from httpx import AsyncClient
 
 # import your app
@@ -25,7 +26,6 @@ def override_get_db() -> Database:
 
 
 app.dependency_overrides[get_db] = override_get_db
-
 
 engine_test = create_async_engine(system_config.db_url_test, poolclass=NullPool)
 
