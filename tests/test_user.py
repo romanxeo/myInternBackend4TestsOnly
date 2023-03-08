@@ -163,25 +163,15 @@ async def test_bad_login_try(ac: AsyncClient):
     assert response.json().get('detail') == 'Incorrect username or password'
 
 
-tokens = {
-    "user_two": ""
-}
-
-
-async def test_login_try(ac: AsyncClient):
-    payload = {
-        "user_email": "test2@test.com",
-        "user_password": "testt",
-    }
-    response = await ac.post("/auth/login", json=payload)
-    tokens["user_two"] = response.json().get('result').get('access_token')
+async def test_login_try(ac: AsyncClient, login_user):
+    response = await login_user("test2@test.com", "testt")
     assert response.status_code == 200
     assert response.json().get('result').get('token_type') == 'Bearer'
 
 
-async def test_auth_me(ac: AsyncClient):
+async def test_auth_me(ac: AsyncClient, users_tokens):
     headers = {
-        "Authorization": f"Bearer {tokens.get('user_two')}",
+        "Authorization": f"Bearer {users_tokens['test2@test.com']}"
     }
     response = await ac.get("/auth/me", headers=headers)
     assert response.status_code == 200
@@ -192,7 +182,7 @@ async def test_auth_me(ac: AsyncClient):
 
 async def test_bad_auth_me(ac: AsyncClient):
     headers = {
-        "Authorization": f"Bearer test",
+        "Authorization": f"Bearer sdffaf.afdsg.rtrwtrete",
     }
     response = await ac.get("/auth/me", headers=headers)
     assert response.status_code == 401
